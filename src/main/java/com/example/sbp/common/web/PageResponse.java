@@ -1,4 +1,4 @@
-package com.example.sbp.common;
+package com.example.sbp.common.web;
 
 import org.springframework.data.domain.Page;
 
@@ -35,11 +35,11 @@ public record PageResponse<T>(
     }
 
     public static <T> PageResponse<T> single(T value) {
-        return new PageResponse(List.of(value), 1, 1, 1L);
+        return new PageResponse<>(List.of(value), 1, 1, 1L);
     }
 
     public static <T> PageResponse<T> empty(Class<T> clazz) {
-        return new PageResponse(Collections.emptyList(), 1, 1, 0L);
+        return new PageResponse<>(Collections.emptyList(), 1, 1, 0L);
     }
 
     public boolean isEmpty() {

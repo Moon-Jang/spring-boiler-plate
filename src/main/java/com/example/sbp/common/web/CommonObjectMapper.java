@@ -1,5 +1,6 @@
-package com.example.sbp.common;
+package com.example.sbp.common.web;
 
+import com.example.sbp.common.support.Status;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;

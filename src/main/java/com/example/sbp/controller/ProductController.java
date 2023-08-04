@@ -1,6 +1,6 @@
 package com.example.sbp.controller;
 
-import com.example.sbp.common.ApiResponse;
+import com.example.sbp.common.web.ApiResponse;
 import com.example.sbp.service.ProductService;
 import com.example.sbp.vo.ProductVo;
 import lombok.RequiredArgsConstructor;

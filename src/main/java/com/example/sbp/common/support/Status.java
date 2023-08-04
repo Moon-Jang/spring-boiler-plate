@@ -1,4 +1,4 @@
-package com.example.sbp.common;
+package com.example.sbp.common.support;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,11 @@ public enum Status {
     EMPTY_TOKEN("토큰이 없습니다."),
     INVALID_TOKEN("토큰이 유효하지 않습니다."),
     NOT_ACCEPTABLE("허용하지 않는 요청입니다."),
-    UNKNOWN("정의 되지 않은 상태입니다.");
+    UNKNOWN("정의 되지 않은 상태입니다."),
+
+    //order
+    PRODUCT_NOT_FOUND("상품을 찾을 수 없습니다.")
+    ;
 
     private final String message;
 

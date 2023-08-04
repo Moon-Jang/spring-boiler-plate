@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        dialect: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    generate-ddl: false
+
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        one-indexed-parameters: true
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  api-docs:
+    enabled: false
+    path: /api-docs/sbp
+  swagger-ui:
+    url: /api-docs/sbp/main.json
+    path: /v1/sbp/

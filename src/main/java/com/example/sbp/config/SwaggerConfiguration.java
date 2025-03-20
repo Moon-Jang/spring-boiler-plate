@@ -21,8 +21,9 @@ public class SwaggerConfiguration {
         return new SpringDocConfigProperties();
     }
 
+
     @Bean
-    ObjectMapperProvider objectMapperProvider(SpringDocConfigProperties springDocConfigProperties) {
+    ObjectMapperProvider objectMapperProvider(SpringDocConfigProperties springDocConfigProperties){
         return new ObjectMapperProvider(springDocConfigProperties);
     }
 }

@@ -1,25 +1,42 @@
 spring:
   jpa:
-    properties:
-      hibernate:
-        default_batch_fetch_size: 100
-        dialect: org.hibernate.dialect.MySQL57Dialect
+    generate-ddl: false
     open-in-view: false
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: none
-    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_batch_fetch_size: 100
+        default_schema: ${DEFAULT_SCHEMA}
 
   data:
     web:
       pageable:
-        default-page-size: 10
+        default-page-size: 20
         one-indexed-parameters: true
 
-server:
-  servlet:
-    encoding:
-      charset: UTF-8
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USER_NAME}
+    password: ${DATASOURCE_USER_PASSWORD}
+    hikari:
+      schema: ${DEFAULT_SCHEMA}
+      pool-name: pre-course-HikariPool
+      maximum-pool-size: 3
+      connection-timeout: 3000
+      max-lifetime: 58000
+      data-source-properties:
+        socketTimeout: 3000
+        prepStmtCacheSize: 100
+        prepStmtCacheSqlLimit: 2048
+        cachePrepStmts: true
+        useServerPrepStmts: true
+        rewriteBatchedStatements: false
+        useSsl: false
 
 springdoc:
   default-consumes-media-type: application/json;charset=UTF-8
@@ -30,3 +47,8 @@ springdoc:
   swagger-ui:
     url: /api-docs/sbp/main.json
     path: /v1/sbp/
+
+application:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400000

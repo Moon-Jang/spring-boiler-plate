@@ -2,12 +2,9 @@ package com.example.sbp.common.web;
 
 import com.example.sbp.common.support.Status;
 
-import java.time.LocalDateTime;
-
 public record ApiResponse<T>(
     Status status,
     String message,
-    LocalDateTime serverDateTime,
     T data
 ) {
     public static ApiResponse<Void> success() {
@@ -16,26 +13,35 @@ public record ApiResponse<T>(
 
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(
-            Status.SUCCESS,
-            Status.SUCCESS.message(),
-            LocalDateTime.now(),
+            ApiResponseStatus.SUCCESS,
+            ApiResponseStatus.SUCCESS.message(),
             data
         );
     }
 
-    public static <T> ApiResponse<T> fail(String message) {
+    public static <T> ApiResponse<T> fail(Status status,
+                                          String message) {
         return fail(
+            status,
             message,
             null
         );
     }
 
-    public static <T> ApiResponse<T> fail(String message,
+    public static <T> ApiResponse<T> fail(String message) {
+        return fail(
+            ApiResponseStatus.FAILURE,
+            message,
+            null
+        );
+    }
+
+    public static <T> ApiResponse<T> fail(Status status,
+                                          String message,
                                           T data) {
         return new ApiResponse<>(
-            Status.FAIL,
+            status,
             message,
-            LocalDateTime.now(),
             data
         );
     }
@@ -52,7 +58,6 @@ public record ApiResponse<T>(
         return new ApiResponse<>(
             status,
             message,
-            LocalDateTime.now(),
             null
         );
     }
@@ -60,9 +65,8 @@ public record ApiResponse<T>(
     public static <T> ApiResponse<T> error(String message,
                                            T errors) {
         return new ApiResponse<>(
-            Status.ERROR,
+            ApiResponseStatus.ERROR,
             message,
-            LocalDateTime.now(),
             errors
         );
     }
@@ -73,9 +77,80 @@ public record ApiResponse<T>(
         return new ApiResponse<>(
             status,
             message,
-            LocalDateTime.now(),
             data
         );
+    }
+
+    public static ApiResponse<Void> unauthorized(Status status,
+                                                 String message) {
+        return new ApiResponse<>(
+            status,
+            message,
+            null
+        );
+    }
+
+    public static ApiResponse<Void> unauthorized(String message) {
+        return unauthorized(
+            ApiResponseStatus.UNAUTHORIZED,
+            message
+        );
+    }
+
+    public static ApiResponse<Void> unauthorized() {
+        return unauthorized(
+            ApiResponseStatus.UNAUTHORIZED.message()
+        );
+    }
+
+    public static ApiResponse<Void> forbidden() {
+        return new ApiResponse<>(
+            ApiResponseStatus.FORBIDDEN,
+            ApiResponseStatus.FORBIDDEN.message(),
+            null
+        );
+    }
+
+    public static ApiResponse<Void> notFound(Status status,
+                                             String message) {
+        return new ApiResponse<>(
+            status,
+            message,
+            null
+        );
+    }
+
+    public static ApiResponse<Void> notFound(String message) {
+        return notFound(
+            ApiResponseStatus.NOT_FOUND,
+            message
+        );
+    }
+
+    public static ApiResponse<Void> notFound() {
+        return notFound(
+            ApiResponseStatus.NOT_FOUND.message()
+        );
+    }
+
+    enum ApiResponseStatus implements Status {
+        SUCCESS("성공"),
+        FAILURE( "요청에 실패하였습니다."),
+        ERROR( "에러가 발생하였습니다."),
+        UNAUTHORIZED("토큰이 유효하지 않습니다."),
+        FORBIDDEN("권한이 없습니다."),
+        NOT_FOUND("해당 리소스는 존재하지 않습니다.");
+
+        private final String message;
+
+        ApiResponseStatus(String message) {
+            this.message = message;
+        }
+
+        @Override
+        public String message() {
+            return message;
+        }
     }
 }
 
